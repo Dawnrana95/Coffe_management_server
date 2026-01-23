@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 })
 
 
-const uri = "mongodb+srv://<db_username>:<db_password>@cluster0.ivkpyx5.mongodb.net/?appName=Cluster0";
+const uri = "mongodb+srv://Coffe_server:JlTg6Q2q5lA0Y30Y@cluster0.ivkpyx5.mongodb.net/?appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -30,6 +30,13 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
+
+
+
+
+
+
+    
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
