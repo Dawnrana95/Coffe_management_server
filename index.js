@@ -40,6 +40,20 @@ async function run() {
       console.log(coffeesData);
     })
 
+    app.put('/coffees/:id', async(req , res) => {
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const uprion = {upsert : true};
+      const updateCoffe = req.body;
+
+      const updatDoc = {
+        $set : updateCoffe
+      }
+
+      const result = await usersCollection.updateOne(filter,updatDoc,uprion)
+      res.send(result)
+    })
+
     app.get('/coffees', async (req, res) => {
       const result = await usersCollection.find().toArray()
       res.send(result)
