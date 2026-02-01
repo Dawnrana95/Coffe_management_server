@@ -29,6 +29,9 @@ async function run() {
   try {
     const db = client.db("myDatabase");
     const usersCollection = db.collection("users");
+
+    const firebaseCullaction = client.db("firebase").collection("users")
+
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
@@ -40,17 +43,17 @@ async function run() {
       console.log(coffeesData);
     })
 
-    app.put('/coffees/:id', async(req , res) => {
+    app.put('/coffees/:id', async (req, res) => {
       const id = req.params.id;
-      const filter = {_id: new ObjectId(id)};
-      const uprion = {upsert : true};
+      const filter = { _id: new ObjectId(id) };
+      const uprion = { upsert: true };
       const updateCoffe = req.body;
 
       const updatDoc = {
-        $set : updateCoffe
+        $set: updateCoffe
       }
 
-      const result = await usersCollection.updateOne(filter,updatDoc,uprion)
+      const result = await usersCollection.updateOne(filter, updatDoc, uprion)
       res.send(result)
     })
 
@@ -59,10 +62,10 @@ async function run() {
       res.send(result)
     })
 
-    app.get('/coffees/:id', async(req, res) => {
+    app.get('/coffees/:id', async (req, res) => {
       const id = req.params.id;
-      const quary = {_id: new ObjectId(id)}
-      const result =await usersCollection.findOne(quary)
+      const quary = { _id: new ObjectId(id) }
+      const result = await usersCollection.findOne(quary)
       res.send(result)
     })
 
@@ -74,6 +77,16 @@ async function run() {
       res.send(result)
     })
 
+    app.post('/users', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+      const result = await firebaseCullaction.insertOne(user)
+      res.send(result)
+    })
+    app.get('/users', async (req, res) => {
+      const result = await firebaseCullaction.find().toArray()
+      res.send(result)
+    })
 
 
 
