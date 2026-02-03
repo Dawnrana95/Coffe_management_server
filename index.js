@@ -87,7 +87,13 @@ async function run() {
       const result = await firebaseCullaction.find().toArray()
       res.send(result)
     })
+    app.delete('/users/:id', async(req, res) => {
+      const id = req.params.id;
 
+      const quary = {_id: new ObjectId(id)}
+      const result = await firebaseCullaction.deleteOne(quary);
+      res.send(result);
+    })
 
 
     await client.db("admin").command({ ping: 1 });
@@ -98,13 +104,6 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
-
-
-
-
-
-
 
 
 app.listen(port, () => {
